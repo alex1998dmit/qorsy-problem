@@ -1,0 +1,64 @@
+{
+    "server": {
+    "host": "127.0.0.1",
+        "port": 8080
+},
+    "rules": {
+    "localhost": {
+        "from": [
+            "*"
+        ],
+            "to": [
+            "kassa-test.qiwi.com",
+            "kassa.dev.qiwi.tools",
+            "kassa-payout-api.testing.qiwi.com"
+        ],
+            "interceptions": [
+            {
+                "req": {
+                    "method": "OPTIONS"
+                },
+                "res": {
+                    "status": 200
+                }
+            }
+        ],
+            "mutations": [
+            {
+                "direction": "to",
+                "headers": [
+                    {
+                        "name": "host",
+                        "value": null
+                    },
+                    {
+                        "name": "origin",
+                        "value": "http://localhost"
+                    }
+                ]
+            },
+            {
+                "direction": "from",
+                "headers": [
+                    {
+                        "name": "transfer-encoding",
+                        "value": null
+                    }
+                ]
+            },
+            {
+                "direction": "from",
+                "headers": [
+                    {
+                        "name": "set-cookie",
+                        "value": {
+                            "from": "/;Domain.+;/i",
+                            "to": ";Domain: localhost;"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+}
